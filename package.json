@@ -4,7 +4,7 @@
   "description": "a paste-bin clone",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "nodemon app.js"
   },
   "author": "Aneesh Gangadhar",
   "license": "ISC",
