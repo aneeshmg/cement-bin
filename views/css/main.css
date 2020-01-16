@@ -1,0 +1,9 @@
+body {
+    background-color: azure;
+}
+.page-header {
+    background-color: dodgerblue;
+    padding: 1%;
+    width: 100%;
+    text-align: center;
+}
