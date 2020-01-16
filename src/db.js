@@ -6,7 +6,7 @@ let _db
 const connectToDatabase = () => {
     return new Promise((res, rej) => {
         MongoClient.connect(
-            `mongodb://localhost:27017/cement`
+            `mongodb://mongo/cement`
         , { useNewUrlParser: true })
         .then(client => {
             log.info('Connected to db.')

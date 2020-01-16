@@ -1,0 +1,28 @@
+version: "2"
+services:
+  mongo:
+    container_name: mongo
+    image: mongo
+    volumes:
+      - ./data/database:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - network
+  web:
+    container_name: cement
+    restart: always
+    build: .
+    ports:
+      - "5555:5555"
+    links:
+      - mongo
+    networks:
+      - network
+    volumes:
+      - .:/code
+    depends_on:
+      - mongo
+networks:
+  network:
+    driver: bridge

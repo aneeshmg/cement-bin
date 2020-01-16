@@ -1,7 +1,8 @@
 const Baray = require('baray')
+const config = require('./config')
 
 module.exports = new Baray({
-    appName: "cement",
+    appName: config.name,
     console: true,
     json: true,
     color: true,
