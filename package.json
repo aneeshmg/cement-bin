@@ -1,0 +1,20 @@
+{
+  "name": "cement-bin",
+  "version": "1.0.0",
+  "description": "a paste-bin clone",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Aneesh Gangadhar",
+  "license": "ISC",
+  "dependencies": {
+    "baray": "^1.2.2",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "helmet": "^3.21.2",
+    "mongodb": "^3.5.0",
+    "nodemon": "^2.0.2",
+    "pug": "^2.0.4"
+  }
+}
