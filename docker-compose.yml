@@ -12,6 +12,8 @@ services:
   web:
     container_name: cement
     restart: always
+    environment:
+      - TZ=America/Phoenix
     build: .
     ports:
       - "5555:5555"

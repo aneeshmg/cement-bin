@@ -13,7 +13,7 @@ div(class='container')
     div(class="row")
         div(class="col-sm-1")
         div(class="col-sm-6")
-            textarea(name="new-paste")
+            textarea(id="new-paste")
         div(class="col-sm-1")
         div(class="col-sm-3")
             div(id="paste-list")
@@ -24,7 +24,8 @@ div(class='container')
         div(class="col-sm-1")
         div(class="col-sm-6")
             center
-                button(class="primary" id="save") Save
+                a(href="#saveForm" rel="modal:open")
+                    button(class="primary" id="preSave") Save
         div(class="col-sm-1")
         div(class="col-sm-3")
             center
@@ -32,6 +33,24 @@ div(class='container')
         div(class="col-sm-1")
 
 
+div(id="saveForm" class="modal")
+    div(class="container")
+        div(class="row")
+            div(class="col-sm-12")
+                h3 Before you save,
+        div(class="row")
+            div(class="col-sm-12")
+                input(type="text" id="filename" placeholder="Filename...")
+        div(class="row")
+            div(class="col-sm-12")
+                input(type="text" id="expirationDate" placeholder="Expiration...")
+        div(class="row")
+            div(class="col-sm-12")
+                a(href="#saveForm" rel="modal:close")
+                    button(class="primary" id="save") Save
+
 
 script(src="/js/jquery.js")
+script(src="/js/jquery.modal.min.js")
+script(src="/js/jquery.datetimepicker.full.min.js")
 script(src="/js/index.js")

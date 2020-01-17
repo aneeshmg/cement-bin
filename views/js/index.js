@@ -1,9 +1,56 @@
 $(document).ready(() => {
-    console.log('jquery loaded...')
 
-    let data = ''
-    for (let i = 0; i < 1000; i++)
-        data += 'the quick brown fox jomped over the lazy dog. '
+    $('#save').click(() => {
+        let text = $('#new-paste').val()
+        let filename = $('#filename').val()
+        let expirationDate = $('#expirationDate').val()
 
-    $('#paste-list').text(data)
+        $.post('/save', {
+            data: text,
+            filename: filename,
+            expirationDate: expirationDate
+        }, response => {
+            if (response == "OK") {
+                refreshList()
+                $('#new-paste').val('')
+            }
+            else alert("Something went wrong, please try again.")
+        })
+    })
+
+    $('#delete').click(() => {
+
+        let filesSelected = $('[name="files"]:checked')
+        let tag = filesSelected[0].attributes.value
+
+        $.ajax({
+            url: '/files',
+            type: 'DELETE',
+            data: {
+                tag: tag.value
+            },
+            success: response => {
+                if (response == "OK")
+                    refreshList()
+            },
+            error: error => {
+                alert("Something went wrong")
+            }
+        })
+
+    })
+
+    const refreshList = () => {
+
+        $.get('/files', files => {
+
+            let op = files.reduce((acc, curr) => acc += `<div class="box"><input type="radio" name="files" value="${curr.tag}"><a href="/files/${curr.tag}.txt">${curr.name}</a><br></div>`, '')
+
+            $('#paste-list').html(op)
+        })
+    }
+
+    $('#expirationDate').datetimepicker()
+
+    refreshList()
 })

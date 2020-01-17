@@ -26,9 +26,26 @@ textarea {
 h3 {
     text-align: center;
 }
-#save {
+#preSave {
     width: 30%;
+}
+#preSave a {
+    color: white;
+}
+#preSave a:hover {
+    text-decoration: none;
+}
+#save {
+    width: 50%;
 }
 #delete {
     width: 50%;
+}
+.box {
+    padding: 2%;
+    margin: 1%;
+    border: 2px solid dodgerblue;
+}
+.box a {
+    margin-left: 5%;
 }
