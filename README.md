@@ -17,27 +17,23 @@
 
 ## Design
 
-This is a one page application.
+This is a one page application. The listing of pastes is refreshed every 5s (configurable).
 
 ### Services:
 
 * ```/ [GET]``` - Renders the application ui.
 * ```/save [POST]``` - receives the text, filename and expiration date for the paste set by the user. It generates a UUID as a 'key' for the paste, saves the key, filename and expiration into the database. It creates a file with a ```{key}.txt``` filename, writes the text into it and saves it inside ```files``` directory. It returns this ```key``` to the frontend so that a URL can be generated for it.
 * ```/files [GET]``` - Fetches the files information from the database, filters it based on the expiration date and returns.
+* ```/files/{hash} [GET]``` - Fetches the file information from the database. If file has expired, it moves the file into an 'expired' directory and responds with "File expired". If the file was deleted, it responds with "File deleted". Otherwise it responds with the contents of the file.
 * ```/files [DELETE]``` - Consumes a file's ```key``` to mark the entry indexed by that ```key``` in the database as ```deleted```. It then moves the file [```{key}.txt```] into a ```deleted``` directory so that its ```URL```, if known to the user, becomes invalid.
 
 ### Database:
 * The database consists of just one ```collection - "files"``` {filename:String, expirationDate:String, deleted:Boolean}
 * There is a database initialization script [```{project-directory}/data/scripts```] which is configured to run when the database is created (only) which sets up the database credentials and access to the ```collection```
 
+---------------------------------------------------------------------------------
 
-## Possible improvements
 
-* The application refreshes the list of files by fetching all of them (filenames) - which happens anytime a ```save``` or a ```delete``` occurs. It could be updated such that only the current document being saved/deleted would be used to 'refresh' the list.
-* The testing of the application was done manually, albeit the database initialization script. This would need to be automated via unit tests.
-* Additional scripts can be written to backup and/or clean the database (both filesystem and database) which can be invoked as required or scheduled via a CRON job.
-* UI looks rudimetary -  can be styled better. [UX too]
-* The application project could use a configuration management tool to have a single source of truth.
 
 ## Getting started:
 
@@ -53,7 +49,7 @@ This is a one page application.
 
 ------------------------------------------------------------------------------------
 
-#### Notes
+### Notes
 
 * The application may crash a few times on startup as it tries to connect to mongodb before it is up. However, it will work fine when mongodb is up.
 * Logs are written into ```{project-directory}/logs``` directory - periodic cleanup may be required.
@@ -64,3 +60,13 @@ This is a one page application.
   * Remove the built mongodb image - ```docker rmi mongo```
   * Delete the contents of ```{project-directory}/data/database``` by running - ```rm -rf data/database/*```
   * Re-run ```docker-compose up --build```
+
+------------------------------------------------------------------------------------
+
+### Possible improvements
+
+* The application refreshes the list of files by fetching all of them (filenames) - which happens anytime a ```save``` or a ```delete``` occurs. It could be updated such that only the current document being saved/deleted would be used to 'refresh' the list.
+* The testing of the application was done manually, albeit the database initialization script. This would need to be automated via unit tests.
+* Additional scripts can be written to backup and/or clean the database (both filesystem and database) which can be invoked as required or scheduled via a CRON job.
+* UI looks rudimetary -  can be styled better. [UX too]
+* The application project could use a configuration management tool to have a single source of truth.

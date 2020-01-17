@@ -1,5 +1,6 @@
 const fs = require('fs')
 const uuid = require('uuid/v4')
+const path = require('path')
 const _db = require('./db')
 const logger = require('./logger')
 
@@ -53,10 +54,39 @@ const getFileListing = (req, res) => {
         let currentDate = new Date()
         // Filter by expiration date before returning
         files = files.filter(file => {
-            expirationDate = new Date(file.expiration)
+            let expirationDate = new Date(file.expiration)
             return expirationDate - currentDate > 0
         })
         res.send(files)
+    })
+}
+
+const getFile = (req, res) => {
+    let db = _db.getDb()
+    let tag = req.params.tag
+
+    db.collection('files').find({
+        tag: tag
+    }).toArray().then(file => {
+        let currentDate = new Date()
+        // Filter by expiration date before returning
+        file = file[0]
+        let expirationDate = new Date(file.expiration)
+
+        if (expirationDate - currentDate < 0) {
+            // Move to 'expired' directory if file is expired
+            fs.rename(`${__dirname}/../files/${tag}.txt`, `${__dirname}/../files/expired/${tag}.txt`, err => {
+                if (err) {
+                    logger.error("Something went wrong while moving file to expired directory." + err)
+                    res.send(500)
+                }
+                else res.send("File expired")
+            })
+        } else if (file.deleted) {
+            res.send("File deleted")
+        } else {
+            res.sendFile(path.resolve(`${__dirname}/../files/${tag}.txt`))
+        }
     })
 }
 
@@ -90,5 +120,6 @@ module.exports = {
     index,
     save,
     getFileListing,
+    getFile,
     deleteFiles
 }

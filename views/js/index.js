@@ -1,6 +1,7 @@
 $(document).ready(() => {
 
     const baseUrl = "http://localhost:5555"
+    const refreshInterval = 5000
 
     $('#save').click(() => {
         let text = $('#new-paste').val()
@@ -16,9 +17,9 @@ $(document).ready(() => {
             if (response.status == 200) {
                 refreshList()
                 $('#new-paste').val('')
-                $('#filename').val()
+                $('#filename').val('')
                 $('#expirationDate').val('')
-                alert(`URL for your paste: ${baseUrl}/files/${response.tag}.txt`)
+                alert(`URL for your paste: ${baseUrl}/files/${response.tag}`)
             }
             else alert("Something went wrong, please try again.")
         })
@@ -47,10 +48,11 @@ $(document).ready(() => {
     })
 
     const refreshList = () => {
+        console.log('refresh')
 
         $.get('/files', files => {
 
-            let op = files.reduce((acc, curr) => acc += `<div class="box"><input type="radio" name="files" value="${curr.tag}"><a href="/files/${curr.tag}.txt">${curr.name}</a><br></div>`, '')
+            let op = files.reduce((acc, curr) => acc += `<div class="box"><input type="radio" name="files" value="${curr.tag}"><a href="/files/${curr.tag}" target="_blank">${curr.name}</a><br></div>`, '')
 
             $('#paste-list').html(op)
         })
@@ -59,4 +61,6 @@ $(document).ready(() => {
     $('#expirationDate').datetimepicker()
 
     refreshList()
+
+    setInterval(refreshList, refreshInterval)
 })

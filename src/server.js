@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({
 }))
 
 app.use('/js', express.static(path.join(__dirname, '../views/js')))
-app.use('/files', express.static(path.join(__dirname, '../files')))
+// app.use('/files', express.static(path.join(__dirname, '../files')))
 
 // Always wear helmet
 app.use(helmet())
