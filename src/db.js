@@ -1,12 +1,13 @@
 const MongoClient = require('mongodb').MongoClient
 const log = require('./logger')
+const config = require('./config')
 
 let _db
 
 const connectToDatabase = () => {
     return new Promise((res, rej) => {
         MongoClient.connect(
-            `mongodb://mongo/cement`
+            `mongodb://${config.dbUser}:${config.dbPass}@mongo/${config.dbName}`
         , { useNewUrlParser: true })
         .then(client => {
             log.info('Connected to db.')
