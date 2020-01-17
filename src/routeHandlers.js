@@ -32,7 +32,12 @@ const save = (req, res) => {
             else logger.info(`Saved file ${filename} as ${id}`)
         })
 
-        if (SUCCESS === true) res.send(200)
+        if (SUCCESS === true) {
+            res.send({
+                tag: id,
+                status: 200
+            })
+        }
         else res.send(500)
     })
 
@@ -67,7 +72,14 @@ const deleteFiles = (req, res) => {
         }
     }).then(() => {
         logger.info(`Deleted ${tag} from database.`)
-        res.send(200)
+
+        fs.rename(`${__dirname}/../files/${tag}.txt`, `${__dirname}/../files/deleted/${tag}.txt`, err => {
+            if (err) {
+                logger.error("Something went wrong while moving file to deleted directory." + err)
+                res.send(500)
+            }
+            else res.send(200)
+        })
     }).catch(err => {
         logger.error("Something went wrong when deleting from database." + err)
         res.send(500)

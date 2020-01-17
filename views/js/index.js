@@ -1,5 +1,7 @@
 $(document).ready(() => {
 
+    const baseUrl = "http://localhost:5555"
+
     $('#save').click(() => {
         let text = $('#new-paste').val()
         let filename = $('#filename').val()
@@ -10,11 +12,13 @@ $(document).ready(() => {
             filename: filename,
             expirationDate: expirationDate
         }, response => {
-            if (response == "OK") {
+            console.log(response)
+            if (response.status == 200) {
                 refreshList()
                 $('#new-paste').val('')
                 $('#filename').val()
                 $('#expirationDate').val('')
+                alert(`URL for your paste: ${baseUrl}/files/${response.tag}.txt`)
             }
             else alert("Something went wrong, please try again.")
         })

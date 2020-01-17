@@ -15,13 +15,15 @@ body {
 #paste-list {
     height: 700px;
     overflow-y: scroll;
-    border: 1px solid skyblue;
+    border: 1px solid dodgerblue;
     padding: 1%;
 
 }
 textarea {
     width: 100%;
     height: 100%;
+    resize: vertical;
+    border: 1px solid dodgerblue;
 }
 h3 {
     text-align: center;
@@ -39,12 +41,16 @@ h3 {
     width: 50%;
 }
 #delete {
-    width: 50%;
+    width: 40%;
 }
 .box {
     padding: 2%;
-    margin: 1%;
-    border: 2px solid dodgerblue;
+    margin-top: 2%;
+    transition: .3s;
+}
+.box:hover {
+    background-color: lightskyblue;
+    transition: .2s;
 }
 .box a {
     margin-left: 5%;
