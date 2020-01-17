@@ -40,9 +40,18 @@ This is a one page application.
 * The application project could use a configuration management tool to have a single source of truth.
 
 ## Getting started:
+
+### Pre-requisites:
+* nodejs
+* docker
+
+### Run:
+* Run ```npm i``` inside ```project-directory```
 * First time run ```docker-compose up --build```, otherwise just ```docker-compose up -d```
 * The application will start on port ```5555```
 * Visit ```http://localhost:5555``` to view the application.
+
+------------------------------------------------------------------------------------
 
 #### Notes
 

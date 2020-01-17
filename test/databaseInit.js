@@ -3,6 +3,7 @@ const config = require('../src/config')
 
 const files = require('./data/files')
 
+// This is just for testing
 
 if (config.test) {
     _db.connectToDatabase()
