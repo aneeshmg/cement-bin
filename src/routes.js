@@ -1,7 +1,4 @@
 const router = require('express').Router()
-const _db = require('./db')
-const logger = require('./logger')
-
 const handlers = require('./routeHandlers')
 
 

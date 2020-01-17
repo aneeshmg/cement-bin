@@ -13,6 +13,8 @@ $(document).ready(() => {
             if (response == "OK") {
                 refreshList()
                 $('#new-paste').val('')
+                $('#filename').val()
+                $('#expirationDate').val('')
             }
             else alert("Something went wrong, please try again.")
         })
